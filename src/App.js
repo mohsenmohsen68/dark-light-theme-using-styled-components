@@ -1,24 +1,46 @@
-import logo from './logo.svg';
-import './App.css';
+import { useEffect, useState } from "react";
+import apiRequest from "./services/axios/config";
+import { BiSolidToggleRight } from "react-icons/bi";
+import { BiToggleLeft } from "react-icons/bi";
+import { FiMoon } from "react-icons/fi";
+import { IoSunnyOutline } from "react-icons/io5";
+import { ThemeProvider } from "styled-components";
+import {
+  StyledDiv,
+  Title,
+  Desc,
+  Icon,
+  lightTheme,
+  darkTheme
+} from "./styled-components/styles";
 
 function App() {
+  const [products, setProducts] = useState([]);
+  const [projectTheme, SetProjectTheme] = useState(lightTheme);
+  useEffect(() => {
+    apiRequest.get("products?limit=4").then((res) => setProducts(res.data));
+  }, []);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <ThemeProvider theme={projectTheme}>
+      <StyledDiv>
+        <Icon>
+          <FiMoon />
+          {projectTheme === lightTheme ? (
+            <BiSolidToggleRight onClick={() => SetProjectTheme(darkTheme)} />
+          ) : (
+            <BiToggleLeft onClick={() => SetProjectTheme(lightTheme)} />
+          )}
+          <IoSunnyOutline />
+        </Icon>
+        <Title>hi there </Title>
+        <Desc> welcome here ... </Desc>
+
+        <ul>
+          {products.map(item => <Desc> {item.title} </Desc>)}
+        </ul>
+      </StyledDiv>
+    </ThemeProvider>
   );
 }
 
