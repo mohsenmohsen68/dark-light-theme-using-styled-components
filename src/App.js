@@ -11,8 +11,11 @@ import {
   Desc,
   Icon,
   lightTheme,
-  darkTheme
+  darkTheme,
+  
 } from "./styled-components/styles";
+import Login from "./components/Login";
+
 
 function App() {
   const [products, setProducts] = useState([]);
@@ -35,10 +38,9 @@ function App() {
         </Icon>
         <Title>hi there </Title>
         <Desc> welcome here ... </Desc>
+<Login/>
+        
 
-        <ul>
-          {products.map(item => <Desc> {item.title} </Desc>)}
-        </ul>
       </StyledDiv>
     </ThemeProvider>
   );
